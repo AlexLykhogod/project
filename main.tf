@@ -20,7 +20,7 @@ provider "aws" {
   access_key = data.vault_generic_secret.aws_key.data["accesskey"]
   secret_key = data.vault_generic_secret.aws_key.data["secretkey"]
 }
-resource "aws_instance" "example_server" {
+resource "aws_instance" "example2_server" {
   ami           = "ami-04e914639d0cca79a"
   instance_type = "t2.micro"
 
