@@ -8,8 +8,8 @@ terraform {
 }
 provider "aws" {
   region     = "us-east-1"
-  access_key = data.vault_generic_secret.aws.data["accesskey"]
-  secret_key = data.vault_generic_secret.aws.data["secretkey"]
+  access_key = data.vault_generic_secret.aws_key.data["accesskey"]
+  secret_key = data.vault_generic_secret.aws_key.data["secretkey"]
 }
 resource "aws_instance" "example_server" {
   ami           = "ami-04e914639d0cca79a"
