@@ -4,8 +4,13 @@ terraform {
       source  = "hashicorp/aws"
       version = "~> 5.0"
     }
+     github = {
+      source = "integrations/github"
+      version = "6.2.3"
+    }
   }
 }
+
 provider "aws" {
   region     = "us-east-1"
   access_key = data.vault_generic_secret.aws_key.data["accesskey"]
@@ -17,5 +22,30 @@ resource "aws_instance" "example_server" {
 
   tags = {
     Name = "Example"
+  }
+}
+resource "aws_security_group" "instance_sg" {
+  name        = "allow_ssh_http"
+  description = "Allow SSH and HTTP"
+
+  ingress {
+    from_port   = 22
+    to_port     = 22
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  ingress {
+    from_port   = 80
+    to_port     = 80
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
   }
 }
