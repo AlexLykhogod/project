@@ -22,7 +22,7 @@ jobs:
       - name: Set up Terraform
         uses: hashicorp/setup-terraform@v2
         with:
-          terraform_version: 1.5.0  # Вкажіть версію Terraform, яку ви використовуєте
+          terraform_version: 1.5.0 
 
       - name: Terraform Init
         run: terraform init
