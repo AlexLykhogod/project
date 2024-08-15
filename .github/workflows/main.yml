@@ -5,8 +5,6 @@ on:
     branches:
       - v2
 
-
-
 jobs:
   terraform:
     name: Terraform Check
@@ -27,3 +25,25 @@ jobs:
       - name: Terraform Validate
         run: terraform validate
 
+      - name: Terraform Format Check
+        run: terraform fmt -check
+
+      - name: Install tflint
+        run: |
+          curl -s https://raw.githubusercontent.com/terraform-linters/tflint/master/install_linux.sh | bash
+
+      - name: Run tflint
+        run: tflint --init && tflint
+
+      - name: Install tfsec
+        run: |
+          curl -s https://raw.githubusercontent.com/aquasecurity/tfsec/master/scripts/install.sh | bash
+
+      - name: Run tfsec
+        run: tfsec
+
+      - name: Install checkov
+        run: pip install checkov
+
+      - name: Run checkov
+        run: checkov -d .
