@@ -24,12 +24,12 @@ jobs:
 
       - name: Terraform Init
         run: |
-          cd environments/dev  # Перейдіть до каталогу середовища
+          cd project/dev  # Перейдіть до каталогу середовища
           terraform init
 
       - name: Terraform Plan
         run: |
-          cd environments/dev  # Перейдіть до каталогу середовища
+          cd project/dev  # Перейдіть до каталогу середовища
           terraform plan -out=tfplan
 
       - name: Terraform Apply
@@ -38,5 +38,5 @@ jobs:
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           AWS_REGION: ${{ secrets.AWS_REGION }}
         run: |
-          cd environments/dev  # Перейдіть до каталогу середовища
+          cd project/dev  # Перейдіть до каталогу середовища
           terraform apply -auto-approve tfplan
