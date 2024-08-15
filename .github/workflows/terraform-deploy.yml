@@ -1,18 +1,17 @@
 name: Terraform Deploy
 
 on:
-  workflow_run:
-    workflows: ["CI/CD Pipeline"]
-    types:
-      - completed
+  push:
+   branches: main
 
 jobs:
   
   terraform:
     
     name: Terraform Deploy
-    runs-on: ubuntu-latest
-    
+    runs-on:
+      group: ubuntu-runners
+      labels: ubuntu-20.04-16core
     
 
     steps:
