@@ -23,14 +23,13 @@ jobs:
           terraform_version: 1.5.0  # Вкажіть версію Terraform, яку ви використовуєте
 
       - name: Terraform Init
-        run: |
-          cd project/dev  # Перейдіть до каталогу середовища
-          terraform init
-
+        run: terraform init
+        
       - name: Terraform Plan
-        run: |
-          cd project/dev  # Перейдіть до каталогу середовища
-          terraform plan -out=tfplan
+        run: | 
+             terraform plan -out=tfplan
+
+          
 
       - name: Terraform Apply
         env:
@@ -38,5 +37,4 @@ jobs:
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           AWS_REGION: ${{ secrets.AWS_REGION }}
         run: |
-          cd project/dev  # Перейдіть до каталогу середовища
-          terraform apply -auto-approve tfplan
+              terraform apply -auto-approve tfplan
