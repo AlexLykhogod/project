@@ -8,6 +8,10 @@ terraform {
       source  = "integrations/github"
       version = "6.2.3"
     }
+    vault = {
+      source = "hashicorp/vault"
+      version = "4.4.0"
+    }
   }
 }
 
