@@ -1,17 +1,19 @@
 name: Terraform Deploy
 
 on:
-  push:
-    branches:
-      - main  # Запускає пайплайн при кожному пуші в основну гілку
-  pull_request:
-    branches:
-      - main  # Запускає пайплайн при кожному pull request до основної гілки
+  workflow_run:
+    workflows: ["CI/CD Pipeline"]
+    types:
+      - completed
 
 jobs:
+  
   terraform:
+    
     name: Terraform Deploy
     runs-on: ubuntu-latest
+    
+    
 
     steps:
       - name: Checkout code
