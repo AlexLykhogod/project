@@ -67,5 +67,5 @@ jobs:
     steps:
       - name: Terraform Plan
         run: |
-              
+              cd project/dev
               terraform plan
