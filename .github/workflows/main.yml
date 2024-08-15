@@ -6,8 +6,9 @@ on:
       - v2
 
 jobs:
-  terraform:
-    name: Terraform Check
+  # Stage 1: Checkout and Setup
+  setup:
+    name: Checkout and Setup
     runs-on: ubuntu-latest
 
     steps:
@@ -19,6 +20,13 @@ jobs:
         with:
           cli_config_credentials_token: ${{ secrets.GITHUB_TOKEN }}
 
+  # Stage 2: Terraform Validation
+  validate:
+    name: Terraform Validation
+    runs-on: ubuntu-latest
+    needs: setup  # Виконується після setup
+
+    steps:
       - name: Terraform Init
         run: terraform init
 
@@ -28,6 +36,14 @@ jobs:
       - name: Terraform Format Check
         run: terraform fmt -check
 
+  # Stage 3: Linting and Security Checks
+  lint_security:
+    name: Linting and Security Checks
+    runs-on: ubuntu-latest
+    needs: validate  # Виконується після validate
+
+    steps:
+      # tflint Check
       - name: Install tflint
         run: |
           curl -s https://raw.githubusercontent.com/terraform-linters/tflint/master/install_linux.sh | bash
@@ -35,15 +51,29 @@ jobs:
       - name: Run tflint
         run: tflint --init && tflint
 
+      # tfsec Check
       - name: Install tfsec
         run: |
+          set +u
           curl -s https://raw.githubusercontent.com/aquasecurity/tfsec/master/scripts/install.sh | bash
+          set -u
 
       - name: Run tfsec
         run: tfsec
 
+      # checkov Check
       - name: Install checkov
         run: pip install checkov
 
       - name: Run checkov
         run: checkov -d .
+
+  # Stage 4: Terraform Plan (Optional)
+  plan:
+    name: Terraform Plan
+    runs-on: ubuntu-latest
+    needs: lint_security  # Виконується після lint_security
+
+    steps:
+      - name: Terraform Plan
+        run: terraform plan
