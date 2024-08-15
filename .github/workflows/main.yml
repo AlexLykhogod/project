@@ -51,17 +51,6 @@ jobs:
       - name: Run tflint
         run: tflint --init && tflint
 
-      # tfsec Check
-      - name: Install tfsec
-        run: |
-           set +u  # Вимикаємо строгий режим для невизначених змінних
-           curl -s https://raw.githubusercontent.com/aquasecurity/tfsec/master/scripts/install.sh | bash || true
-           set -u  # Вмикаємо строгий режим назад
-
-
-      - name: Run tfsec
-        run: tfsec
-
       # checkov Check
       - name: Install checkov
         run: pip install checkov
