@@ -9,9 +9,8 @@ jobs:
   terraform:
     
     name: Terraform Deploy
-    runs-on:
-      group: ubuntu-runners
-      labels: ubuntu-20.04-16core
+    runs-on: ubuntu-latest
+      
     
 
     steps:
