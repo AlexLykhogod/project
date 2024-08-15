@@ -54,9 +54,10 @@ jobs:
       # tfsec Check
       - name: Install tfsec
         run: |
-          set +u
-          curl -s https://raw.githubusercontent.com/aquasecurity/tfsec/master/scripts/install.sh | bash
-          set -u
+           set +u  # Вимикаємо строгий режим для невизначених змінних
+           curl -s https://raw.githubusercontent.com/aquasecurity/tfsec/master/scripts/install.sh | bash || true
+           set -u  # Вмикаємо строгий режим назад
+
 
       - name: Run tfsec
         run: tfsec
